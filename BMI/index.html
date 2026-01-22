@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 健康計算器 - 個人化飲食建議</title>
+    <meta name="description" content="計算您的BMI，獲得專屬的個人化健康飲食建議，包含營養策略、推薦飲食模式、外食族指南與健康習慣養成">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- 頂部漸層背景裝飾 -->
+        <div class="bg-decoration"></div>
+
+        <!-- 主卡片 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="logo">
+                    <span class="logo-icon">⚖️</span>
+                    <h1>BMI 健康計算器</h1>
+                </div>
+                <p class="subtitle">計算您的身體質量指數，獲得專屬飲食建議</p>
+            </div>
+
+            <form id="bmi-form" class="bmi-form">
+                <!-- 性別選擇 -->
+                <div class="gender-selection">
+                    <label class="gender-label">選擇性別</label>
+                    <div class="gender-buttons">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male" class="gender-btn male">
+                            <span class="gender-icon">👨</span>
+                            <span class="gender-text">男性</span>
+                        </label>
+
+                        <input type="radio" id="female" name="gender" value="female" required>
+                        <label for="female" class="gender-btn female">
+                            <span class="gender-icon">👩</span>
+                            <span class="gender-text">女性</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 輸入區塊 -->
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="height">身高</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="height" name="height" placeholder="170" min="100" max="250"
+                                required>
+                            <span class="unit">公分</span>
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="weight">體重</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="weight" name="weight" placeholder="65" min="20" max="300"
+                                step="0.1" required>
+                            <span class="unit">公斤</span>
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="age">年齡</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="age" name="age" placeholder="25" min="10" max="120" required>
+                            <span class="unit">歲</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">計算 BMI</span>
+                    <span class="btn-icon">📊</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- 結果區塊 -->
+        <div id="result-section" class="result-section hidden">
+            <div class="result-card">
+                <div class="result-header">
+                    <h2>您的 BMI 結果</h2>
+                    <div class="bmi-display">
+                        <span id="bmi-value" class="bmi-value">--</span>
+                        <span id="bmi-category" class="bmi-category">--</span>
+                    </div>
+                </div>
+
+                <!-- BMI 視覺化量表 -->
+                <div class="bmi-gauge">
+                    <div class="gauge-bar">
+                        <div class="gauge-section underweight">過輕</div>
+                        <div class="gauge-section normal">正常</div>
+                        <div class="gauge-section overweight">過重</div>
+                        <div class="gauge-section obese">肥胖</div>
+                    </div>
+                    <div id="gauge-pointer" class="gauge-pointer"></div>
+                </div>
+
+                <!-- 詳細資訊 -->
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-icon">📏</div>
+                        <div class="info-content">
+                            <span class="info-label">理想體重範圍</span>
+                            <span id="ideal-weight" class="info-value">--</span>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🔥</div>
+                        <div class="info-content">
+                            <span class="info-label">每日基礎代謝率</span>
+                            <span id="bmr" class="info-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 飲食建議區塊 -->
+            <div class="diet-section">
+                <div class="section-header">
+                    <h2>🍽️ 個人化飲食建議</h2>
+                    <p id="gender-note" class="gender-note"></p>
+                </div>
+
+                <!-- 營養策略目標 -->
+                <div class="subsection">
+                    <h3>📊 營養策略目標</h3>
+                    <div id="nutrition-strategy" class="nutrition-strategy">
+                        <!-- 動態生成的營養策略 -->
+                    </div>
+                </div>
+
+                <!-- 核心飲食建議 -->
+                <div class="subsection">
+                    <h3>💡 核心飲食策略</h3>
+                    <div id="diet-recommendations" class="diet-cards">
+                        <!-- 動態生成的飲食建議卡片 -->
+                    </div>
+                </div>
+
+                <!-- 重點提醒/闢謠 -->
+                <div id="myth-buster" class="subsection myth-section">
+                    <!-- 動態生成的提醒內容 -->
+                </div>
+
+                <!-- 推薦飲食模式 -->
+                <div class="subsection">
+                    <h3>🥗 推薦飲食模式</h3>
+                    <div id="diet-methods" class="diet-methods">
+                        <!-- 動態生成的飲食模式 -->
+                    </div>
+                </div>
+
+                <!-- 每日營養建議 -->
+                <div class="subsection">
+                    <h3>📈 每日營養攝取建議</h3>
+                    <div id="nutrition-chart" class="nutrition-chart">
+                        <!-- 動態生成的營養圖表 -->
+                    </div>
+                </div>
+
+                <!-- 推薦食物 -->
+                <div class="subsection">
+                    <h3>🥬 推薦食物清單</h3>
+                    <div id="food-list" class="food-grid">
+                        <!-- 動態生成的食物清單 -->
+                    </div>
+                </div>
+
+                <!-- 外食族指南 -->
+                <div class="subsection">
+                    <h3>🍽️ 外食族生存指南</h3>
+                    <div id="eating-out-guide" class="eating-out-guide">
+                        <!-- 動態生成的外食指南 -->
+                    </div>
+                </div>
+
+                <!-- 12個健康微習慣 -->
+                <div class="subsection">
+                    <h3>✨ 12個健康飲食微習慣</h3>
+                    <div id="micro-habits" class="micro-habits">
+                        <!-- 動態生成的習慣清單 -->
+                    </div>
+                </div>
+
+                <!-- 注意事項 -->
+                <div class="warning-section">
+                    <div class="warning-card">
+                        <span class="warning-icon">⚠️</span>
+                        <p>以上建議僅供參考，實際飲食計劃請諮詢專業營養師或醫師。BMI 計算無法反映肌肉量、體脂率等因素，建議搭配其他健康指標綜合評估。所有建議遵循「高纖、低油、低糖、低鹽」四大健康原則。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 重新計算按鈕 -->
+            <button id="recalculate-btn" class="recalculate-btn">
+                <span>🔄</span> 重新計算
+            </button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
